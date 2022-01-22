@@ -1,111 +1,53 @@
-package com.example.calculator;
+package com.example.activitylifecycle;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
-    boolean isNewOp = true;
-    String oldNumber,op;
-    EditText ed1;
+public class MainActivity extends AppCompatActivity
+{
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        TextView msg = (TextView) findViewById(R.id.textbox1);
+        msg.setText("Activity is Created");
+        Toast.makeText(getApplicationContext(),"Activity has been Created",Toast.LENGTH_SHORT).show();
+    }
 
-        ed1 = findViewById(R.id.editText);
-
+    @Override
+    protected void onStart() {
+        Toast.makeText(getApplicationContext(), "Activity has Started", Toast.LENGTH_SHORT).show();
+        super.onStart();
     }
-    public void numberEvent(View view)
-    {
-        if(isNewOp)
-            ed1.setText("");
-        isNewOp = false ;
-        String number = ed1.getText().toString();
-        switch (view.getId())
-        {
-            case R.id.buttoone:
-                number += "1";
-                break;
-            case R.id.buttotwo:
-                number += "2";
-                break;
-            case R.id.buttothree:
-                number += "3";
-                break;
-            case R.id.buttofour:
-                number += "4";
-                break;
-            case R.id.buttofive:
-                number += "5";
-                break;
-            case R.id.buttosix:
-                number += "6";
-                break;
-            case R.id.buttoseven:
-                number += "7";
-                break;
-            case R.id.buttoeight:
-                number += "8";
-                break;
-            case R.id.buttonine:
-                number += "9";
-                break;
-            case R.id.buttozero:
-                number += "0";
-                break;
-            case R.id.buttodot:
-                number += ".";
-                break;
-            case R.id.buttopandm:
-                number = "-"+number;
-                break;
-        }
-        ed1.setText(number);
+    @Override
+    protected void onResume() {
+        Toast.makeText(getApplicationContext(),"Activity is being Resumed",Toast.LENGTH_SHORT).show();
+        super.onResume();
     }
-    public void operatorEvent(View view)
-    {
-        isNewOp = true;
-        oldNumber = ed1.getText().toString();
-        switch (view.getId())
-        {
-            case R.id.buttodiv: op = "/"; break;
-            case R.id.buttomul: op = "*"; break;
-            case R.id.buttoplus: op = "+"; break;
-            case R.id.buttominus: op = "-"; break;
-        }
+    @Override
+    protected void onPause() {
+        Toast.makeText(getApplicationContext(),"Activity Paused",Toast.LENGTH_SHORT).show();
+        super.onPause();
     }
-    public void equalEvent(View view) {
-        String newnumber = ed1.getText().toString();
-        double result =0.0;
-        switch(op)
-        {
-            case "+":
-                result = Double.parseDouble(oldNumber) + Double.parseDouble(newnumber);
-                break;
-            case "-":
-                result = Double.parseDouble(oldNumber) - Double.parseDouble(newnumber);
-                break;
-            case "*":
-                result = Double.parseDouble(oldNumber) * Double.parseDouble(newnumber);
-                break;
-            case "/":
-                result = Double.parseDouble(oldNumber) / Double.parseDouble(newnumber);
-                break;
-        }
-        ed1.setText(result+"");
+    @Override
+    protected void onStop() {
+        Toast.makeText(getApplicationContext(),"Activity Stopped",Toast.LENGTH_SHORT).show();
+        super.onStop();
     }
-    public void acEvent(View view)
-    {
-        ed1.setText("0");
-        isNewOp = true;
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Toast.makeText(getApplicationContext(),"Activity Restarted",Toast.LENGTH_SHORT).show();
     }
-    public void percentEvent(View view)
-    {
-        double no =Double.parseDouble(ed1.getText().toString())/100;
-        ed1.setText(no+"");
-        isNewOp = true;
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Toast.makeText(getApplicationContext(),"Activity Destroy",Toast.LENGTH_SHORT).show();
     }
 }
